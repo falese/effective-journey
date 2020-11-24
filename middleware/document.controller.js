@@ -8,7 +8,7 @@ const uploadFile = async (req,res) => {
         if (req.file == undefined){
             return res.send('No file attached')
         }
-        return res.json({success: true, message: 'File uploaded.fdfd', data: req.file});
+        return res.json({success: true, message: 'File uploaded.', data: req.file});
        
     } catch (error) {
         console.log(error);
