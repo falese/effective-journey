@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-const Document =mongoose.model(
+const Document = mongoose.model(
     "Document",
     new mongoose.Schema({
         category:{
@@ -8,6 +8,10 @@ const Document =mongoose.model(
         },   
         fileId:{
             type:mongoose.Schema.Types.ObjectId
+        },
+        doc:{
+            data: Buffer,
+            contentType: String
         }
     })
 )
