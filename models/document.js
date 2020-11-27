@@ -9,6 +9,9 @@ const Document = mongoose.model(
         fileId:{
             type:mongoose.Schema.Types.ObjectId
         },
+        fileName: {
+            type: String,
+        },
         doc:{
             data: Buffer,
             contentType: String

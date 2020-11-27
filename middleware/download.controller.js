@@ -1,7 +1,4 @@
-
-const document = require('../models/document')
 const mongoose = require('mongoose');
-
 mongoose.connect(process.env.DB_CONNECT_STRING,
     {useNewUrlParser: true,
     useUnifiedTopology: true});
@@ -9,16 +6,17 @@ mongoose.connect(process.env.DB_CONNECT_STRING,
     const db = mongoose.connection;
     db.on('error', console.error.bind(console, 'connection error:'));
     db.once('open', function() {
-      console.log(db)
+      
     });
-
 
 
 module.exports.download = (req,res)=> {
     const collection = db.collection('images.files');
     const collectionChunks = db.collection('images.chunks');
-
-    collection.find({id: req.body.id}).toArray(function(err, docs){        
+    const fileId = req.body.fileName
+    console.log(fileId)
+    collection.find({filename: fileId}).toArray(function(err, docs){        
+        console.log(docs)
         if(err){        
           return res.json({
            title: 'File error', 
@@ -52,17 +50,20 @@ module.exports.download = (req,res)=> {
           //This is in Binary JSON or BSON format, which is stored               
           //in fileData array in base64 endocoded string format               
          
-          fileData.push(chunks[i].data.toString('base64'));          
+          fileData.push(chunks[i].data.toString('base64')); 
+          
         }
         
          //Display the chunks using the data URI format          
          let finalFile = 'data:' + docs[0].contentType + ';base64,' 
-              + fileData.join('');          
+              + fileData.join('');
+                    
           res.json({
              title: 'Image File', 
              message: 'Image loaded from MongoDB GridFS', 
              imgurl: finalFile});
-         });      
+         });
+          
         }          
        });
 }

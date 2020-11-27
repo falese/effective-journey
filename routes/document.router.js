@@ -7,5 +7,6 @@ const download = require('../middleware/download.controller')
 
 app.post('/upload', controller.uploadFile)
 
-app.get('/download', download.download)
+app.get('/download/:filename', download.download)
+
 module.exports = app
